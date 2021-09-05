@@ -241,11 +241,7 @@ app.get("/about", function(req, res){
 app.get("/contact", function(req, res){
   res.render("contact", {contactContent: contactContent});
 });
-let port = process.env.PORT;
-if (port == null || port == "") {
-  port = 3000;
-}
 
-app.listen(port, function () {
+app.listen(process.env.PORT || 3000, function () {
   console.log("Server has started successfully.");
 });
