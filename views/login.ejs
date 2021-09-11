@@ -26,7 +26,11 @@
             <div class="or">
                 <span>OR</span>
             </div>
-         
+            <% if( typeof errors != 'undefined' ){ %>
+              <% errors.forEach(function(error){ %>
+              <p><%= error.msg %></p>
+              <% }); %>
+              <% } %>
             <input type="email" name="username" placeholder="Email Address">
             <input type="password" name="password" placeholder="Password">
           </div>
@@ -34,9 +38,9 @@
         <p class="signup">Not a user?  <a style="text-decoration: underline;"  href="/register">Sign up</a></p>
      
     </form>
+    
     </nav>
-  
-  
+    
   
   <%- include("partials/footer"); %>
 

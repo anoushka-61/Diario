@@ -10,7 +10,7 @@ const passportLocalMongoose = require("passport-local-mongoose");
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const findOrCreate = require('mongoose-findorcreate');
 
-const homeStartingContent = "Welcome to your online personalised diary";
+const homeStartingContent = "Welcome to your online personal diary";
 const aboutContent = "Hi! This is Anoushka here . I am a B.tech CSE- 3rd Year Student who is trying hands on web development . This is my personal diary - web app. You can compose your personal notes here and keep it with you whereever you go";
 
 
@@ -32,7 +32,10 @@ app.use(passport.session());
 
 const uri = process.env.ATLAS_URI;
 mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+
+
 mongoose.set("useCreateIndex",true);
+
 const postSchema = new mongoose.Schema({
 
   title: String,
@@ -43,6 +46,7 @@ const postSchema = new mongoose.Schema({
 });
 
 const Post = mongoose.model("Post", postSchema);
+
 const userSchema =new mongoose.Schema({
   username: {type: String},
   googleId: {
@@ -56,6 +60,7 @@ const userSchema =new mongoose.Schema({
     default: Date.now,
   },
 })
+
 userSchema.plugin(passportLocalMongoose);
 userSchema.plugin(findOrCreate);
 
@@ -113,7 +118,7 @@ app.get('/auth/google/Diario',
     res.redirect('/home');
   });
   app.post("/", function (req, res) {
-  
+    
   
     const user = new User({
       username: req.body.username,
@@ -125,8 +130,10 @@ app.get('/auth/google/Diario',
         console.log(err);
       }
       if(!user){
-       
-        res.redirect("/register");
+        let errors = [];
+        errors.push({ msg: "Unregistered email" });
+        res.render("login",{errors});
+      
       }
       else {
         req.login(user, function (err) {
@@ -152,9 +159,10 @@ app.get("/logout", function(req,res){
 });
 app.post("/register", function(req,res){
  User.register({username: req.body.username}, req.body.password, function(err,user){
+   let errors=[];
    if(err){
-     console.log(err);
-     res.redirect("/register");
+    errors.push({ msg: err.message });
+    res.render("register", { errors })
    }else{
      passport.authenticate("local")(req,res,function(){
        res.redirect("/home");
@@ -238,9 +246,7 @@ app.get("/about", function(req, res){
   res.render("about", {aboutContent: aboutContent});
 });
 
-app.get("/contact", function(req, res){
-  res.render("contact", {contactContent: contactContent});
-});
+
 
 let port = process.env.PORT;
 if (port == null || port == "") {

@@ -12,22 +12,26 @@
     <form class="auth-form" action="/register" method="POST" autocomplete="off">
       <div class="auth">
           <h1>DIARIO</h1>
-          <div class="h3"><h3>REGISTER</h3></div>
+          <div class="h3"><h3>SIGNUP</h3></div>
           <div class="auth-button">
               <a href="/auth/google" role="button">
                   <i class="fab fa-google"></i>
-                  &nbsp  Register
+                  &nbsp  SIGNUP
               </a>
           </div>
           <div class="or">
               <span>or</span>
           </div>
-          
+          <% if( typeof errors != 'undefined' ){ %>
+            <% errors.forEach(function(error){ %>
+            <p><%= error.msg %></p>
+            <% }); %>
+            <% } %>
           <input type="email" name="username" placeholder="Email Address">
           <input type="password" name="password" placeholder="Password">
       </div>
       <button type="submit" class="auth-button">Signup</button>
-      <p>Register yourself in the online diary</p>
+      <p>Register yourself in your online personal diary</p>
      
   </form>
 
