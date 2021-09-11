@@ -30,7 +30,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-const uri = process.env.ATLAS_URI;
+const uri = process.env.DB_PATH;
 mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
 
