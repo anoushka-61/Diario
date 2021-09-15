@@ -1,0 +1,26 @@
+<%- include("partials/formheader"); -%>
+      <form class="auth-form" action="/forgot" method="POST" autocomplete="off">
+        
+        
+        <div class="auth">
+            
+            <div class="h3"><h3>CHANGE PASSWORD</h3></div>
+            
+            <% if( typeof errors != 'undefined' ){ %>
+                <% errors.forEach(function(error){ %>
+                <p><%= error.msg %></p>
+                <% }); %>
+                <% } %>
+            
+            <input type="email" name="username" placeholder="Email">
+            <input type="password" name="password" placeholder="New Password">
+          </div>
+        <button type="submit" class="auth-button">CHANGE PASSWORD</button>
+       
+     
+    </form>
+    
+    </nav>
+    
+  
+  <%- include("partials/footer"); %>

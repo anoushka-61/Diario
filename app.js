@@ -107,7 +107,9 @@ app.get("/", function(req,res){
 app.get("/register", function(req,res){
   res.render("register");
 });
-
+app.get("/forgot", function(req,res){
+  res.render("forgot");
+});
 
 app.get("/auth/google", passport.authenticate('google',{ scope: ["profile"] })
 );
@@ -141,7 +143,9 @@ app.get('/auth/google/Diario',
             console.log(err);
           } else {
             passport.authenticate("local")(req, res, function () {
-              res.redirect("/home");
+              
+               res.redirect("/home");
+             
             });
           }
         });
@@ -171,6 +175,49 @@ app.post("/register", function(req,res){
  })
   
   });
+ app.post('/forgot', function(req, res) {
+  const user = new User({
+    username: req.body.username,
+    password: req.body.password,
+  });
+
+    User.findOne({ username:req.body.username },(err, user) => {
+      
+      if (err) {
+        console.log(err);
+      } else {
+        
+        if (!user) {
+          let errors = [];
+          errors.push({ msg: "User was not found" });
+              res.render("forgot",{errors});
+        } else {
+          user.setPassword(req.body.password, function(err,user){
+            if (err) {
+              let errors = [];
+              errors.push({ msg: "Password could not be saved. Please try again!" });
+              res.render("forgot",{errors});
+                
+            } else { 
+              user.save(function (err) {
+                if (!err) {
+                  let errors = [];
+        errors.push({ msg: "Password Changed" });
+        res.render("login",{errors});
+                }
+              });
+              
+            }
+          });
+        }
+      }
+      })
+      
+    })
+        
+                         
+                         
+        
 
   app.get("/home", function(req, res){
     if(req.isAuthenticated()){

@@ -32,10 +32,13 @@ body {
   font-weight: 30px;
  color: #363636;
 }
-
+.nav-heading{
+  margin-top:-10px;
+  text-align: center;
+}
 .h3{
   font-family: 'Prata', serif;
-  margin-top: 50px;
+  margin-top: 80px;
   
 }
 .navbar-nav li {
@@ -119,10 +122,10 @@ a:hover {
 
 .auth-form {
   text-align: center;
-  top: 300%;
+  top: 37%;
   left: 50%;
   transform: translate(-50%, -50%);
-  position: absolute;
+  position: fixed;
 }
  
 
@@ -197,6 +200,7 @@ input:focus::placeholder {
  .signup{
    font-size: 16px;
    letter-spacing: 0px;
+   
    
  }
 /* UserHome page */
